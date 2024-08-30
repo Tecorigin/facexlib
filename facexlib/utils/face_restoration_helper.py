@@ -352,6 +352,9 @@ class FaceRestoreHelper(object):
                 upsample_img = inv_soft_mask * pasted_face + (1 - inv_soft_mask) * upsample_img[:, :, 0:3]
                 upsample_img = np.concatenate((upsample_img, alpha), axis=2)
             else:
+                if inv_soft_mask.ndim > upsample_img.ndim:
+                    for _ in range(inv_soft_mask.ndim - upsample_img.ndim):
+                        upsample_img = upsample_img[..., np.newaxis]
                 upsample_img = inv_soft_mask * pasted_face + (1 - inv_soft_mask) * upsample_img
 
         if np.max(upsample_img) > 256:  # 16-bit image
