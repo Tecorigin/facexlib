@@ -310,7 +310,7 @@ class FaceRestoreHelper(object):
                 out = out.argmax(dim=1).squeeze().cpu().numpy()
 
                 mask = np.zeros(out.shape)
-                MASK_COLORMAP = [0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 255, 0, 0, 0]
+                MASK_COLORMAP = [0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 255, 0, 0, 0]
                 for idx, color in enumerate(MASK_COLORMAP):
                     mask[out == idx] = color
                 #  blur the mask
