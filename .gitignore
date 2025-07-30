@@ -4,6 +4,11 @@
 *.jpg
 version.py
 
+!assets/folder1/
+!assets/folder1/*.png
+!assets/folder2/
+!assets/folder2/*.png
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
