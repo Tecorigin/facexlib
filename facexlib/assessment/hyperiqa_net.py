@@ -79,27 +79,28 @@ class HyperNet(nn.Module):
 
         res_out = self.res(img)
 
+        # sdaa不支持view
         # input vector for target net
-        target_in_vec = res_out['target_in_vec'].view(-1, self.target_in_size, 1, 1)
+        target_in_vec = res_out['target_in_vec'].reshape(-1, self.target_in_size, 1, 1)
 
         # input features for hyper net
-        hyper_in_feat = self.conv1(res_out['hyper_in_feat']).view(-1, self.hyperInChn, feature_size, feature_size)
+        hyper_in_feat = self.conv1(res_out['hyper_in_feat']).reshape(-1, self.hyperInChn, feature_size, feature_size)
 
         # generating target net weights & biases
-        target_fc1w = self.fc1w_conv(hyper_in_feat).view(-1, self.f1, self.target_in_size, 1, 1)
-        target_fc1b = self.fc1b_fc(self.pool(hyper_in_feat).squeeze()).view(-1, self.f1)
+        target_fc1w = self.fc1w_conv(hyper_in_feat).reshape(-1, self.f1, self.target_in_size, 1, 1)
+        target_fc1b = self.fc1b_fc(self.pool(hyper_in_feat).squeeze()).reshape(-1, self.f1)
 
-        target_fc2w = self.fc2w_conv(hyper_in_feat).view(-1, self.f2, self.f1, 1, 1)
-        target_fc2b = self.fc2b_fc(self.pool(hyper_in_feat).squeeze()).view(-1, self.f2)
+        target_fc2w = self.fc2w_conv(hyper_in_feat).reshape(-1, self.f2, self.f1, 1, 1)
+        target_fc2b = self.fc2b_fc(self.pool(hyper_in_feat).squeeze()).reshape(-1, self.f2)
 
-        target_fc3w = self.fc3w_conv(hyper_in_feat).view(-1, self.f3, self.f2, 1, 1)
-        target_fc3b = self.fc3b_fc(self.pool(hyper_in_feat).squeeze()).view(-1, self.f3)
+        target_fc3w = self.fc3w_conv(hyper_in_feat).reshape(-1, self.f3, self.f2, 1, 1)
+        target_fc3b = self.fc3b_fc(self.pool(hyper_in_feat).squeeze()).reshape(-1, self.f3)
 
-        target_fc4w = self.fc4w_conv(hyper_in_feat).view(-1, self.f4, self.f3, 1, 1)
-        target_fc4b = self.fc4b_fc(self.pool(hyper_in_feat).squeeze()).view(-1, self.f4)
+        target_fc4w = self.fc4w_conv(hyper_in_feat).reshape(-1, self.f4, self.f3, 1, 1)
+        target_fc4b = self.fc4b_fc(self.pool(hyper_in_feat).squeeze()).reshape(-1, self.f4)
 
-        target_fc5w = self.fc5w_fc(self.pool(hyper_in_feat).squeeze()).view(-1, 1, self.f4, 1, 1)
-        target_fc5b = self.fc5b_fc(self.pool(hyper_in_feat).squeeze()).view(-1, 1)
+        target_fc5w = self.fc5w_fc(self.pool(hyper_in_feat).squeeze()).reshape(-1, 1, self.f4, 1, 1)
+        target_fc5b = self.fc5b_fc(self.pool(hyper_in_feat).squeeze()).reshape(-1, 1)
 
         out = {}
         out['target_in_vec'] = target_in_vec
@@ -215,13 +216,14 @@ class ResNetBackbone(nn.Module):
         x = self.layer1(x)
 
         # the same effect as lda operation in the paper, but save much more memory
-        lda_1 = self.lda1_fc(self.lda1_pool(x).view(x.size(0), -1))
+        # sdaa不支持view
+        lda_1 = self.lda1_fc(self.lda1_pool(x).reshape(x.size(0), -1))
         x = self.layer2(x)
-        lda_2 = self.lda2_fc(self.lda2_pool(x).view(x.size(0), -1))
+        lda_2 = self.lda2_fc(self.lda2_pool(x).reshape(x.size(0), -1))
         x = self.layer3(x)
-        lda_3 = self.lda3_fc(self.lda3_pool(x).view(x.size(0), -1))
+        lda_3 = self.lda3_fc(self.lda3_pool(x).reshape(x.size(0), -1))
         x = self.layer4(x)
-        lda_4 = self.lda4_fc(self.lda4_pool(x).view(x.size(0), -1))
+        lda_4 = self.lda4_fc(self.lda4_pool(x).reshape(x.size(0), -1))
 
         vec = torch.cat((lda_1, lda_2, lda_3, lda_4), 1)
 

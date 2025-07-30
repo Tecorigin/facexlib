@@ -15,7 +15,7 @@ def calculate_points(heatmaps):
     indexes = np.argmax(heatline, axis=2)
 
     preds = np.stack((indexes % W, indexes // W), axis=2)
-    preds = preds.astype(np.float, copy=False)
+    preds = preds.astype(np.float64, copy=False)
 
     inr = indexes.ravel()
 
@@ -268,7 +268,7 @@ class HourGlass(nn.Module):
 
 class FAN(nn.Module):
 
-    def __init__(self, num_modules=1, end_relu=False, gray_scale=False, num_landmarks=68, device='cuda'):
+    def __init__(self, num_modules=1, end_relu=False, gray_scale=False, num_landmarks=68, device='sdaa'):
         super(FAN, self).__init__()
         self.device = device
         self.num_modules = num_modules

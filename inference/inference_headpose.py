@@ -36,7 +36,7 @@ def main(args):
 
         # normalize
         normalize(det_face, [0.485, 0.456, 0.406], [0.229, 0.224, 0.225], inplace=True)
-        det_face = det_face.unsqueeze(0).cuda()
+        det_face = det_face.unsqueeze(0).sdaa()
 
         yaw, pitch, roll = headpose_net(det_face)
         visualize_headpose(img, yaw, pitch, roll, args.save_path)
@@ -45,7 +45,7 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Head pose estimation using the Hopenet network.')
     parser.add_argument('--img_path', type=str, default='assets/test.jpg')
-    parser.add_argument('--save_path', type=str, default='assets/test_headpose.png')
+    parser.add_argument('--save_path', type=str, default='test_headpose.png')
     parser.add_argument('--detection_model_name', type=str, default='retinaface_resnet50')
     parser.add_argument('--headpose_model_name', type=str, default='hopenet')
     parser.add_argument('--half', action='store_true')

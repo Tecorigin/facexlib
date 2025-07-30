@@ -75,8 +75,8 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input_folder', help='Path to the input folder', type=str)
-    parser.add_argument('--save_folder', help='Path to save visualized frames', type=str, default=None)
+    parser.add_argument('--input_folder', help='Path to the input folder', type=str, default='assets')
+    parser.add_argument('--save_folder', help='Path to save visualized frames', type=str, default='results')
 
     parser.add_argument(
         '--detect_interval',

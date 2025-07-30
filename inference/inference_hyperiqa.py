@@ -43,7 +43,7 @@ def main(args):
             detect_face = Image.fromarray(detect_face)
 
             detect_face = transforms(detect_face)
-            detect_face = torch.tensor(detect_face.cuda()).unsqueeze(0)
+            detect_face = detect_face.sdaa().clone().detach().unsqueeze(0)
 
             pred = assess_net(detect_face)
             pred_scores.append(float(pred.item()))

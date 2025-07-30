@@ -91,7 +91,12 @@ class FaceRestoreHelper(object):
         self.pad_input_imgs = []
 
         if device is None:
-            self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+            if torch.cuda.is_available():
+                self.device = 'cuda'
+            elif torch.sdaa.is_available():
+                self.device = 'sdaa'
+            else:
+                self.device = 'cpu'
         else:
             self.device = device
 

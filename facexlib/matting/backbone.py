@@ -76,5 +76,5 @@ class MobileNetV2Backbone(BaseBackbone):
             print('cannot find the pretrained mobilenetv2 backbone')
             exit()
 
-        ckpt = torch.load(ckpt_path)
+        ckpt = torch.load(ckpt_path, weights_only=False)
         self.model.load_state_dict(ckpt)

@@ -23,7 +23,7 @@ if __name__ == '__main__':
     parser.add_argument('--img_path', type=str, default='assets/test2.jpg')
     parser.add_argument('--save_path', type=str, default='test_alignment.png')
     parser.add_argument('--model_name', type=str, default='awing_fan')
-    parser.add_argument('--device', type=str, default='cuda')
+    parser.add_argument('--device', type=str, default='sdaa')
     parser.add_argument('--to68', action='store_true')
     args = parser.parse_args()
 

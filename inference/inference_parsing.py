@@ -48,7 +48,7 @@ def main(img_path, output):
     img_input = cv2.resize(img_input, (512, 512), interpolation=cv2.INTER_LINEAR)
     img = img2tensor(img_input.astype('float32') / 255., bgr2rgb=True, float32=True)
     normalize(img, (0.485, 0.456, 0.406), (0.229, 0.224, 0.225), inplace=True)
-    img = torch.unsqueeze(img, 0).cuda()
+    img = torch.unsqueeze(img, 0).sdaa()
 
     with torch.no_grad():
         out = net(img)[0]
@@ -65,7 +65,7 @@ def main(img_path, output):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--input', type=str, default='datasets/ffhq/ffhq_512/00000000.png')
+    parser.add_argument('--input', type=str, default='assets/test.jpg')
     parser.add_argument('--output', type=str, default='results', help='output folder')
     args = parser.parse_args()
 

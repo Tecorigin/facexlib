@@ -23,7 +23,7 @@ def main(args):
 
     img_t = img2tensor(img, bgr2rgb=True, float32=True)
     normalize(img_t, (0.5, 0.5, 0.5), (0.5, 0.5, 0.5), inplace=True)
-    img_t = img_t.unsqueeze(0).cuda()
+    img_t = img_t.unsqueeze(0).sdaa()
 
     # resize image for input
     _, _, im_h, im_w = img_t.shape

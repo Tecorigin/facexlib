@@ -42,7 +42,7 @@ def draw_and_save(image, bboxes_and_landmarks, save_path, order_type=1):
 det_net = init_detection_model('retinaface_resnet50')
 half = False
 
-det_net.cuda().eval()
+det_net.sdaa().eval()
 if half:
     det_net = det_net.half()
 

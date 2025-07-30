@@ -5,7 +5,7 @@ from facexlib.utils import load_file_from_url
 from .retinaface import RetinaFace
 
 
-def init_detection_model(model_name, half=False, device='cuda', model_rootpath=None):
+def init_detection_model(model_name, half=False, device='sdaa', model_rootpath=None):
     if model_name == 'retinaface_resnet50':
         model = RetinaFace(network_name='resnet50', half=half, device=device)
         model_url = 'https://github.com/xinntao/facexlib/releases/download/v0.1.0/detection_Resnet50_Final.pth'
@@ -19,7 +19,7 @@ def init_detection_model(model_name, half=False, device='cuda', model_rootpath=N
         url=model_url, model_dir='facexlib/weights', progress=True, file_name=None, save_dir=model_rootpath)
 
     # TODO: clean pretrained model
-    load_net = torch.load(model_path, map_location=lambda storage, loc: storage)
+    load_net = torch.load(model_path, map_location=lambda storage, loc: storage, weights_only=False)
     # remove unnecessary 'module.'
     for k, v in deepcopy(load_net).items():
         if k.startswith('module.'):

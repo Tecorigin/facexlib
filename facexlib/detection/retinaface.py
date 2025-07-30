@@ -71,7 +71,15 @@ def generate_config(network_name):
 class RetinaFace(nn.Module):
 
     def __init__(self, network_name='resnet50', half=False, phase='test', device=None):
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') if device is None else device
+        if device is None:
+            if torch.cuda.is_available():
+                self.device = 'cuda'
+            elif torch.sdaa.is_available():
+                self.device = 'sdaa'
+            else:
+                self.device = 'cpu'
+        else:
+            self.device = device
 
         super(RetinaFace, self).__init__()
         self.half_inference = half
@@ -92,7 +100,7 @@ class RetinaFace(nn.Module):
             self.body = IntermediateLayerGetter(backbone, cfg['return_layers'])
         elif cfg['name'] == 'Resnet50':
             import torchvision.models as models
-            backbone = models.resnet50(pretrained=False)
+            backbone = models.resnet50(weights=None)
             self.body = IntermediateLayerGetter(backbone, cfg['return_layers'])
 
         in_channels_stage2 = cfg['in_channel']

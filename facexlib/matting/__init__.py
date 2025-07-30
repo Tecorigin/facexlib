@@ -5,7 +5,7 @@ from facexlib.utils import load_file_from_url
 from .modnet import MODNet
 
 
-def init_matting_model(model_name='modnet', half=False, device='cuda', model_rootpath=None):
+def init_matting_model(model_name='modnet', half=False, device='sdaa', model_rootpath=None):
     if model_name == 'modnet':
         model = MODNet(backbone_pretrained=False)
         model_url = 'https://github.com/xinntao/facexlib/releases/download/v0.2.0/matting_modnet_portrait.pth'
@@ -15,7 +15,7 @@ def init_matting_model(model_name='modnet', half=False, device='cuda', model_roo
     model_path = load_file_from_url(
         url=model_url, model_dir='facexlib/weights', progress=True, file_name=None, save_dir=model_rootpath)
     # TODO: clean pretrained model
-    load_net = torch.load(model_path, map_location=lambda storage, loc: storage)
+    load_net = torch.load(model_path, map_location=lambda storage, loc: storage, weights_only=False)
     # remove unnecessary 'module.'
     for k, v in deepcopy(load_net).items():
         if k.startswith('module.'):
