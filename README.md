@@ -41,12 +41,11 @@ Other recommended projects: &emsp; :arrow_forward: [Real-ESRGAN](https://github.
 
 - Python >= 3.7 (Recommend to use [Anaconda](https://www.anaconda.com/download/#linux) or [Miniconda](https://docs.conda.io/en/latest/miniconda.html))
 - [PyTorch >= 1.7](https://pytorch.org/)
-- Option: NVIDIA GPU + [CUDA](https://developer.nvidia.com/cuda-downloads)
 
 ### Installation
 
 ```bash
-pip install facexlib
+pip install facexlib-0.3.0-py3-none-any.whl
 ```
 
 ### Pre-trained models
